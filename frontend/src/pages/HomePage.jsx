@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import Filters from '../components/Filters';
 import Feed from '../components/Feed';
 import ChatPanel from '../components/ChatPanel';
-import { LogOut, User, BookOpen, GraduationCap } from 'lucide-react';
+import SearchBar from '../components/SearchBar';
+import { LogOut, User, BookOpen, GraduationCap, Search } from 'lucide-react';
 
 const HomePage = () => {
   const [userData, setUserData] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState([]);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,6 +37,12 @@ const HomePage = () => {
     setSelectedFilters(filters);
   };
 
+  const handleSearch = (mentor) => {
+    // Handle mentor selection from search
+    console.log('Selected mentor:', mentor);
+    // You can implement navigation to mentor profile or other actions here
+  };
+
   if (!userData) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
@@ -49,6 +57,17 @@ const HomePage = () => {
               <h1 className="text-2xl font-bold text-gray-900">
                 <span className="text-primary-600">Fixora</span>
               </h1>
+            </div>
+            
+            {/* Search Bar - Center */}
+            <div className="flex-1 max-w-2xl mx-8">
+              <button
+                onClick={() => setIsSearchOpen(true)}
+                className="w-full flex items-center gap-3 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors cursor-text text-left"
+              >
+                <Search className="w-5 h-5 text-gray-400" />
+                <span className="text-gray-500">Search mentors by name or skills...</span>
+              </button>
             </div>
             
             <div className="flex items-center gap-4">
@@ -97,6 +116,13 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+
+      {/* Search Bar Modal */}
+      <SearchBar
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        onSearch={handleSearch}
+      />
     </div>
   );
 };
