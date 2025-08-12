@@ -1,0 +1,33 @@
+{
+  "name": "fixora",
+  "version": "1.0.0",
+  "description": "A full-stack MERN mentorship platform connecting mentors and mentees",
+  "main": "index.js",
+  "scripts": {
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev-json": "concurrently \"npm run server-json\" \"npm run client\"",
+    "server": "cd backend && npm run dev",
+    "server-json": "cd backend && node server-json.js",
+    "client": "cd frontend && npm start",
+    "build": "cd frontend && npm run build",
+    "seed": "cd backend && node seedData.js",
+    "seed-json": "cd backend && node seed-json.js",
+    "start": "cd backend && npm start"
+  },
+  "keywords": [
+    "mentorship",
+    "mern",
+    "react",
+    "nodejs",
+    "express",
+    "mongodb",
+    "ai-chat",
+    "learning-platform"
+  ],
+  "author": "Fixora Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}

@@ -1,0 +1,29 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Frontend build
+frontend/build/
+
+# Coverage / logs
+coverage/
+logs/
+*.log
+
+# OS / Editors
+.DS_Store
+.vscode/
+.idea/
+
+# Env/Secrets (URIs/secrets live here; never commit)
+*.env
+*.env.*
+.env
+.env.local
+backend/config.env
+
+# Backend JSON dev data
+backend/data/
