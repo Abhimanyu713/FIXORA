@@ -28,6 +28,7 @@ router.get('/skills/:skill', async (req, res) => {
 // Get mentors by multiple skills (comma-separated)
 router.get('/skills', async (req, res) => {
   try {
+     console.log(req.params)
     const { skills } = req.query;
     if (!skills) {
       return res.status(400).json({ message: 'Skills parameter is required' });
@@ -59,6 +60,7 @@ router.post('/', async (req, res) => {
 // Get mentor by ID
 router.get('/:id', async (req, res) => {
   try {
+   
     const mentor = await Mentor.findById(req.params.id);
     if (mentor) {
       res.json(mentor);
@@ -74,7 +76,7 @@ router.get('/:id', async (req, res) => {
 router.get('/search', async (req, res) => {
   try {
     const { query, skills } = req.query;
-    let searchCriteria = {};
+    let searchCriteria = {}; 
 
     if (query) {
       // Enhanced search: search in both name AND areas of proficiency
