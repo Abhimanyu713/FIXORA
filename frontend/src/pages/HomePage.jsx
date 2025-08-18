@@ -4,7 +4,6 @@ import Filters from "../components/Filters";
 import Feed from "../components/Feed";
 import ChatPanel from "../components/ChatPanel";
 import SearchBar from "../components/SearchBar";
-import { LogOut, User, BookOpen, GraduationCap, Search } from "lucide-react";
 import Navbar from "../components/Navbar";
 
 const HomePage = () => {
@@ -12,6 +11,50 @@ const HomePage = () => {
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const navigate = useNavigate();
+
+  // ✅ Define reusable inline styles
+  const styles = {
+    container: {
+      minHeight: "100vh",
+      display: "flex",
+      backgroundColor: "#f9fafb" // gray-50
+    },
+    sidebar: {
+      width: "60px",
+      backgroundColor: "#fff",
+      borderRight: "1px solid #e5e7eb", // gray-200
+      position: "fixed",
+      top: 0,
+      left: 0,
+      height: "100%"
+    },
+    main: {
+      flex: 1,
+      marginLeft: "60px" // shift right equal to sidebar width
+    },
+    header: {
+      backgroundColor: "#fff",
+      borderBottom: "1px solid #e5e7eb",
+      height: "64px",
+      display: "flex",
+      alignItems: "center",
+      padding: "0 24px",
+      boxShadow: "0 1px 2px rgba(0,0,0,0.05)"
+    },
+    logo: {
+      fontSize: "24px",
+      fontWeight: "bold",
+      color: "#111827" // gray-900
+    },
+    content: {
+      padding: "24px"
+    },
+    grid: {
+      display: "grid",
+      gridTemplateColumns: "1fr 2fr 1fr",
+      gap: "24px"
+    }
+  };
 
   useEffect(() => {
     const storedUserData = localStorage.getItem("userData");
@@ -43,39 +86,33 @@ const HomePage = () => {
 
   if (!userData) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div style={{ minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
         Loading...
       </div>
     );
   }
+
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      {/* Navbar - Fixed Left Side */}
-      <aside className="w-15 bg-white border-r border-gray-200  fixed top-0 left-0 h-full">
+    <div style={styles.container}>
+      {/* Sidebar Navbar */}
+      <aside style={styles.sidebar}>
         <Navbar />
       </aside>
 
-      {/* Main Section shifted to the right */}
-      <div className="flex-1 ml-14">
+      {/* Main Section */}
+      <div style={styles.main}>
         {/* Header */}
-        <header className="bg-white shadow-sm border-b border-gray-200">
-          <div className="px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16 ">
-              <div className="flex items-center">
-                <h1 className="text-2xl font-bold text-gray-900">
-                  <span className="text-primary-600">Fixora</span>
-                </h1>
-              </div>
-              {/* ... rest of your header code */}
-            </div>
-          </div>
+        <header style={styles.header}>
+          <h1 style={styles.logo}>
+            <span style={{ color: "#2563eb" }}>Fixora</span> {/* primary-600 */}
+          </h1>
         </header>
 
-        {/* Main Content */}
-        <div className="px-4 sm:px-6 lg:px-8 py-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Content */}
+        <div style={styles.content}>
+          <div style={styles.grid}>
             {/* Filters */}
-            <div className="lg:col-span-3">
+            <div>
               <Filters
                 userType={userData.type}
                 userSkills={
@@ -89,16 +126,13 @@ const HomePage = () => {
             </div>
 
             {/* Feed */}
-            <div className="lg:col-span-6">
+            <div>
               <Feed selectedFilters={selectedFilters} />
             </div>
 
             {/* Chat */}
-            <div className="lg:col-span-3">
-              <ChatPanel
-                userType={userData.type}
-                userSkills={selectedFilters}
-              />
+            <div>
+              <ChatPanel userType={userData.type} userSkills={selectedFilters} />
             </div>
           </div>
         </div>

@@ -18,8 +18,7 @@ const ProfilePage = () => {
     skills: ["JavaScript", "React", "Node.js"],
     coins: 120,
     bio: "Passionate learner, focused on improving frontend development skills.",
-    profilePhoto:
-      "https://i.pravatar.cc/150?img=32", // random avatar
+    profilePhoto: "https://i.pravatar.cc/150?img=32",
   });
 
   const handleLogout = () => {
@@ -31,113 +30,177 @@ const ProfilePage = () => {
     alert("Edit profile clicked! (you can integrate modal or form here)");
   };
 
+  // 🎨 Inline Styles Object
+  const styles = {
+    container: {
+      minHeight: "100vh",
+      backgroundColor: "#f9fafb", // gray-50
+    },
+    header: {
+      backgroundColor: "#fff",
+      borderBottom: "1px solid #e5e7eb", // gray-200
+      boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
+      padding: "0 1rem",
+    },
+    brand: {
+      fontSize: "24px",
+      fontWeight: "bold",
+      color: "#2563eb", // blue-600
+    },
+    profileCard: {
+      backgroundColor: "#fff",
+      border: "1px solid #e5e7eb",
+      borderRadius: "8px",
+      padding: "24px",
+      boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
+    },
+    profilePhoto: {
+      width: "96px",
+      height: "96px",
+      borderRadius: "50%",
+      border: "4px solid #bfdbfe", // blue-100
+      objectFit: "cover",
+    },
+    name: {
+      marginTop: "12px",
+      fontSize: "20px",
+      fontWeight: "bold",
+      color: "#111827", // gray-900
+    },
+    subText: {
+      color: "#6b7280", // gray-500
+    },
+    badge: {
+      marginTop: "8px",
+      padding: "4px 12px",
+      backgroundColor: "#eff6ff",
+      color: "#2563eb",
+      borderRadius: "9999px",
+      fontSize: "14px",
+      textTransform: "capitalize",
+    },
+    coins: {
+      marginTop: "12px",
+      display: "flex",
+      alignItems: "center",
+      gap: "4px",
+      color: "#ca8a04", // yellow-600
+      fontWeight: "600",
+    },
+    editBtn: {
+      marginTop: "16px",
+      display: "flex",
+      alignItems: "center",
+      gap: "8px",
+      padding: "8px 16px",
+      backgroundColor: "#2563eb",
+      color: "#fff",
+      border: "none",
+      borderRadius: "8px",
+      cursor: "pointer",
+    },
+    sectionTitle: {
+      fontSize: "18px",
+      fontWeight: "600",
+      marginTop: "20px",
+      color: "#111827",
+    },
+    skill: {
+      padding: "4px 12px",
+      backgroundColor: "#f3f4f6",
+      color: "#374151",
+      borderRadius: "9999px",
+      fontSize: "14px",
+    },
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div style={styles.container}>
+      {/* Navbar */}
+      <aside style={{ width: "60px", background: "#fff", borderRight: "1px solid #e5e7eb", position: "fixed", top: 0, left: 0, height: "100%" }}>
+        <Navbar />
+      </aside>
 
-          {/* Navbar - Fixed Left Side */}
-            <aside className="w-15 bg-white border-r border-gray-200  fixed top-0 left-0 h-full">
-              <Navbar />
-            </aside>
-      
       {/* Header */}
-
-
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <h1 className="text-2xl font-bold text-blue-600">SolutionSphere</h1>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-gray-700">
-                {userData.type === "mentor" ? (
-                  <GraduationCap className="w-5 h-5 text-blue-600" />
-                ) : (
-                  <BookOpen className="w-5 h-5 text-green-600" />
-                )}
-                <span className="font-medium">{userData.name}</span>
-                <span className="text-sm text-gray-500">({userData.type})</span>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors"
-              >
-                <LogOut className="w-4 h-4" />
-                Logout
-              </button>
+      <header style={styles.header}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", height: "64px", maxWidth: "1120px", margin: "0 auto" }}>
+          <h1 style={styles.brand}>SolutionSphere</h1>
+          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "#374151" }}>
+              {userData.type === "mentor" ? (
+                <GraduationCap size={20} color="#2563eb" />
+              ) : (
+                <BookOpen size={20} color="#16a34a" />
+              )}
+              <span style={{ fontWeight: "500" }}>{userData.name}</span>
+              <span style={{ fontSize: "14px", color: "#6b7280" }}>({userData.type})</span>
             </div>
+            <button
+              onClick={handleLogout}
+              style={{ display: "flex", alignItems: "center", gap: "6px", color: "#4b5563", background: "none", border: "none", cursor: "pointer" }}
+            >
+              <LogOut size={16} /> Logout
+            </button>
           </div>
         </div>
       </header>
 
       {/* Profile Content */}
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <div className="bg-white shadow-sm rounded-lg p-6 border border-gray-200">
-          {/* Profile Photo + Info */}
-          <div className="flex flex-col items-center">
-            <img
-              src={userData.profilePhoto}
-              alt="Profile"
-              className="w-24 h-24 rounded-full border-4 border-blue-100 object-cover"
-            />
-            <h2 className="mt-4 text-2xl font-bold text-gray-900">{userData.name}</h2>
-            <p className="text-gray-500">{userData.email}</p>
-            <p className="text-gray-500">{userData.phone}</p>
-            <span className="mt-1 px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm capitalize">
-              {userData.type}
-            </span>
+      <main style={{ maxWidth: "768px", margin: "0 auto", padding: "32px 16px" }}>
+        <div style={styles.profileCard}>
+          {/* Profile Info */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <img src={userData.profilePhoto} alt="Profile" style={styles.profilePhoto} />
+            <h2 style={styles.name}>{userData.name}</h2>
+            <p style={styles.subText}>{userData.email}</p>
+            <p style={styles.subText}>{userData.phone}</p>
+            <span style={styles.badge}>{userData.type}</span>
 
             {/* Coins */}
-            <div className="flex items-center gap-1 mt-3 text-yellow-600 font-semibold">
-              <Coins className="w-5 h-5" /> {userData.coins} Coins Left
+            <div style={styles.coins}>
+              <Coins size={20} /> {userData.coins} Coins Left
             </div>
 
             {/* Edit Button */}
-            <button
-              onClick={handleEdit}
-              className="mt-4 flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition"
-            >
-              <Edit3 className="w-4 h-4" /> Edit Profile
+            <button onClick={handleEdit} style={styles.editBtn}>
+              <Edit3 size={16} /> Edit Profile
             </button>
           </div>
 
           {/* Bio */}
-          <div className="mt-6">
-            <h3 className="text-lg font-semibold text-gray-900">About Me</h3>
-            <p className="mt-2 text-gray-600">{userData.bio}</p>
+          <div>
+            <h3 style={styles.sectionTitle}>About Me</h3>
+            <p style={styles.subText}>{userData.bio}</p>
           </div>
 
           {/* Details */}
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginTop: "20px" }}>
             <div>
-              <h4 className="text-sm text-gray-500">College</h4>
-              <p className="font-medium text-gray-900">{userData.college}</p>
+              <h4 style={styles.subText}>College</h4>
+              <p style={{ fontWeight: "500", color: "#111827" }}>{userData.college}</p>
             </div>
             <div>
-              <h4 className="text-sm text-gray-500">Stream</h4>
-              <p className="font-medium text-gray-900">{userData.stream}</p>
+              <h4 style={styles.subText}>Stream</h4>
+              <p style={{ fontWeight: "500", color: "#111827" }}>{userData.stream}</p>
             </div>
             <div>
-              <h4 className="text-sm text-gray-500">Education</h4>
-              <p className="font-medium text-gray-900">{userData.education}</p>
+              <h4 style={styles.subText}>Education</h4>
+              <p style={{ fontWeight: "500", color: "#111827" }}>{userData.education}</p>
             </div>
             {userData.type === "mentor" && (
               <div>
-                <h4 className="text-sm text-gray-500">Years of Experience</h4>
-                <p className="font-medium text-gray-900">{userData.yearsOfExperience}</p>
+                <h4 style={styles.subText}>Years of Experience</h4>
+                <p style={{ fontWeight: "500", color: "#111827" }}>{userData.yearsOfExperience}</p>
               </div>
             )}
           </div>
 
           {/* Skills */}
-          <div className="mt-6">
-            <h3 className="text-lg font-semibold text-gray-900">
-              {userData.type === "mentor" ? "Areas of Proficiency" : "Things to Learn"}
-            </h3>
-            <div className="flex flex-wrap gap-2 mt-2">
+          <div>
+            <h3 style={styles.sectionTitle}>{userData.type === "mentor" ? "Areas of Proficiency" : "Things to Learn"}</h3>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "8px" }}>
               {userData.skills.map((skill, index) => (
-                <span
-                  key={index}
-                  className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
-                >
+                <span key={index} style={styles.skill}>
                   {skill}
                 </span>
               ))}

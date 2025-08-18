@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import CreateAccountPage from "./pages/CreateAccountPage";
 import ExplorePage from "./pages/ExplorePage";
+import CallingPage from "./pages/CallingPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/create_account" element={<CreateAccountPage />} />
+           <Route path="/calling" element={<CallingPage />} />
           <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>
       </div>
