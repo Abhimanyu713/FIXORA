@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Search } from "lucide-react";
-import MentorGrid from "../components/MentorGrid";
+import MentorGrid from "../components/ExplorePage/MentorGrid";
 
 const mentorsData = [
   {

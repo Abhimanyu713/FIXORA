@@ -1,14 +1,132 @@
 import React, { useState } from "react";
-import { Lock, Mail } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+
+const styles = {
+  container: {
+    minHeight: "100vh",
+    background: "linear-gradient(to bottom right, #eff6ff, #e0e7ff)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "1rem",
+  },
+  wrapper: {
+    width: "100%",
+    maxWidth: "40rem",
+  },
+  card: {
+    background: "white",
+    boxShadow: "0 10px 15px rgba(0, 0, 0, 0.1)",
+    borderRadius: "0.75rem",
+    padding: "2rem",
+  },
+  header: {
+    textAlign: "center",
+    marginBottom: "2rem",
+  },
+  iconWrapper: {
+    width: "4rem",
+    height: "4rem",
+    background: "#dbeafe",
+    borderRadius: "9999px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: "0 auto 1rem",
+  },
+  title: {
+    fontSize: "1.875rem",
+    fontWeight: "bold",
+    color: "#111827",
+  },
+  subtitle: {
+    color: "#4b5563",
+    marginTop: "0.5rem",
+  },
+  form: {
+    display: "grid",
+    gap: "1.5rem",
+  },
+  label: {
+    display: "block",
+    fontSize: "0.875rem",
+    fontWeight: "500",
+    color: "#374151",
+    marginBottom: "0.5rem",
+  },
+  inputGroup: {
+    display: "flex",
+    alignItems: "center",
+    border: "1px solid #d1d5db",
+    borderRadius: "0.5rem",
+    padding: "0.5rem 0.75rem",
+  },
+  input: {
+    flex: 1,
+    border: "none",
+    outline: "none",
+    fontSize: "1rem",
+  },
+  hint: {
+    fontSize: "0.875rem",
+    color: "#6b7280",
+    marginTop: "0.25rem",
+  },
+  error: {
+    color: "#ef4444",
+    fontSize: "0.875rem",
+    textAlign: "center",
+  },
+  button: (isFormValid) => ({
+    width: "100%",
+    padding: "0.75rem 1rem",
+    borderRadius: "0.5rem",
+    fontWeight: "500",
+    transition: "background-color 0.2s ease",
+    border: "none",
+    cursor: isFormValid ? "pointer" : "not-allowed",
+    backgroundColor: isFormValid ? "#2563eb" : "#d1d5db",
+    color: isFormValid ? "white" : "#6b7280",
+  }),
+  oauthBtn: {
+    width: "100%",
+    padding: "0.75rem 1rem",
+    borderRadius: "0.5rem",
+    fontWeight: "500",
+    border: "1px solid #d1d5db",
+    backgroundColor: "white",
+    cursor: "pointer",
+  },
+  divider: {
+    display: "flex",
+    alignItems: "center",
+    textAlign: "center",
+    color: "#6b7280",
+    fontSize: "0.875rem",
+    margin: "1rem 0",
+  },
+  dividerLine: {
+    flex: 1,
+    height: "1px",
+    backgroundColor: "#d1d5db",
+  },
+  dividerText: {
+    margin: "0 0.75rem",
+  },
+};
 
 const CreateAccountForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    confirmPassword: "",
   });
 
   const [error, setError] = useState("");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const handlePasswordVisibleOrNot = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,57 +153,46 @@ const CreateAccountForm = ({ onSubmit }) => {
       return;
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
     setError("");
     onSubmit(formData);
   };
 
-  const isFormValid =
-    formData.email &&
-    formData.password &&
-    formData.confirmPassword &&
-    validateEmail(formData.email) &&
-    formData.password === formData.confirmPassword;
+  const isFormValid = formData.email && formData.password && validateEmail(formData.email);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl">
-        <button className="mb-6 text-gray-600 hover:text-gray-800 flex items-center gap-2 transition-colors">
-          ← Back to selection
-        </button>
-        <div className="card bg-white shadow-lg rounded-xl p-8">
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Lock className="w-8 h-8 text-primary-600" />
+    <div style={styles.container}>
+      <div style={styles.wrapper}>
+        <div style={styles.card}>
+          <div style={styles.header}>
+            <div style={styles.iconWrapper}>
+              <Lock style={{ width: "2rem", height: "2rem", color: "#2563eb" }} />
             </div>
-            <h2 className="text-3xl font-bold text-gray-900">Create Account</h2>
-            <p className="text-gray-600 mt-2">
-              Sign up with your email and password
-            </p>
+            <h2 style={styles.title}>Create Account</h2>
+            <p style={styles.subtitle}>Sign up with your email and password</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} style={styles.form}>
             {/* Email */}
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
+              <label htmlFor="email" style={styles.label}>
                 Email Address *
               </label>
-              <div className="flex items-center input-field border rounded-lg px-3 py-2">
-                <Mail className="w-5 h-5 text-gray-400 mr-2" />
+              <div style={styles.inputGroup}>
+                <Mail
+                  style={{
+                    width: "1.25rem",
+                    height: "1.25rem",
+                    color: "#9ca3af",
+                    marginRight: "0.5rem",
+                  }}
+                />
                 <input
                   type="email"
                   id="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="flex-1 outline-none"
+                  style={styles.input}
                   placeholder="Enter your email"
                   required
                 />
@@ -94,69 +201,79 @@ const CreateAccountForm = ({ onSubmit }) => {
 
             {/* Password */}
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
+              <label htmlFor="password" style={styles.label}>
                 Password *
               </label>
-              <div className="flex items-center input-field border rounded-lg px-3 py-2">
-                <Lock className="w-5 h-5 text-gray-400 mr-2" />
+              <div style={styles.inputGroup}>
+                <Lock
+                  style={{
+                    width: "1.25rem",
+                    height: "1.25rem",
+                    color: "#9ca3af",
+                    marginRight: "0.5rem",
+                  }}
+                />
                 <input
-                  type="password"
+                  type={isPasswordVisible ? "text" : "password"}
                   id="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="flex-1 outline-none"
+                  style={styles.input}
                   placeholder="Enter your password"
                   required
                 />
+                {isPasswordVisible ? (
+                  <Eye
+                    onClick={handlePasswordVisibleOrNot}
+                    style={{
+                      width: "1.25rem",
+                      height: "1.25rem",
+                      color: "#9ca3af",
+                      cursor: "pointer",
+                    }}
+                  />
+                ) : (
+                  <EyeOff
+                    onClick={handlePasswordVisibleOrNot}
+                    style={{
+                      width: "1.25rem",
+                      height: "1.25rem",
+                      color: "#9ca3af",
+                      cursor: "pointer",
+                    }}
+                  />
+                )}
               </div>
-              <p className="text-sm text-gray-500 mt-1">
-                Password must be at least 6 characters
-              </p>
-            </div>
-
-            {/* Confirm Password */}
-            <div>
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Confirm Password *
-              </label>
-              <div className="flex items-center input-field border rounded-lg px-3 py-2">
-                <Lock className="w-5 h-5 text-gray-400 mr-2" />
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  className="flex-1 outline-none"
-                  placeholder="Confirm your password"
-                  required
-                />
-              </div>
+              <p style={styles.hint}>Password must be at least 6 characters</p>
             </div>
 
             {/* Error Message */}
-            {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+            {error && <p style={styles.error}>{error}</p>}
 
             {/* Submit */}
             <button
               type="submit"
               disabled={!isFormValid}
-              className={`w-full py-3 px-4 rounded-lg font-medium transition-colors duration-200 ${
-                isFormValid
-                  ? "bg-primary-600 hover:bg-primary-700 text-white"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
-              }`}
+              style={styles.button(isFormValid)}
             >
               Create Account
             </button>
           </form>
+
+          {/* Divider */}
+          <div style={styles.divider}>
+            <div style={styles.dividerLine}></div>
+            <span style={styles.dividerText}>or</span>
+            <div style={styles.dividerLine}></div>
+          </div>
+
+          {/* OAuth Buttons */}
+          <button style={styles.oauthBtn}>Sign up with Google</button>
+          <button style={{ ...styles.oauthBtn, marginTop: "0.75rem" }}>
+            
+            Sign up with Apple
+          </button>
         </div>
       </div>
     </div>

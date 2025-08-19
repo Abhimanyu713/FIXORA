@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Filters from "../components/Filters";
-import Feed from "../components/Feed";
-import ChatPanel from "../components/ChatPanel";
-import SearchBar from "../components/SearchBar";
+import Filters from "../components/HomePage/Filters";
+import Feed from "../components/HomePage/Feed";
+import ChatPanel from "../components/HomePage/ChatPanel";
+import SearchBar from "../components/HomePage/SearchBar";
 import Navbar from "../components/Navbar";
 
 const HomePage = () => {
@@ -12,7 +12,7 @@ const HomePage = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const navigate = useNavigate();
 
-  // ✅ Define reusable inline styles
+  
   const styles = {
     container: {
       minHeight: "100vh",

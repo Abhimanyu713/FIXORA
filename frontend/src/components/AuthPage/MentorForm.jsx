@@ -8,6 +8,7 @@ const MentorForm = ({ onSubmit }) => {
     education: '',
     college: '',
     stream: '',
+    yearsOfExperience: '',
     areasOfProficiency: []
   });
 
@@ -48,12 +49,14 @@ const MentorForm = ({ onSubmit }) => {
 
     onSubmit({
       ...formData,
-      age: parseInt(formData.age)
+      age: parseInt(formData.age),
+      yearsOfExperience: parseInt(formData.yearsOfExperience)
     });
   };
 
   const isFormValid = formData.name && formData.age && formData.education && 
-                     formData.college && formData.stream && formData.areasOfProficiency.length > 0;
+                     formData.college && formData.stream &&
+                     formData.yearsOfExperience && formData.areasOfProficiency.length > 0;
 
   return (
     <div className="card">
@@ -153,6 +156,25 @@ const MentorForm = ({ onSubmit }) => {
             onChange={handleInputChange}
             className="input-field"
             placeholder="e.g., Computer Science, Data Science, Engineering"
+            required
+          />
+        </div>
+
+        {/* Years of Experience */}
+        <div>
+          <label htmlFor="yearsOfExperience" className="block text-sm font-medium text-gray-700 mb-2">
+            Years of Industry Experience *
+          </label>
+          <input
+            type="number"
+            id="yearsOfExperience"
+            name="yearsOfExperience"
+            value={formData.yearsOfExperience}
+            onChange={handleInputChange}
+            className="input-field"
+            placeholder="Enter number of years"
+            min="0"
+            max="50"
             required
           />
         </div>
