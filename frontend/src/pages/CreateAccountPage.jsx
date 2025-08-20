@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import OAuthButton from "../components/OAuthButton";
+import GoogleIcon from "../assets/icons/google.png";
+import AppleIcon from "../assets/icons/apple-logo.png";
 
 const styles = {
   container: {
@@ -157,7 +160,8 @@ const CreateAccountForm = ({ onSubmit }) => {
     onSubmit(formData);
   };
 
-  const isFormValid = formData.email && formData.password && validateEmail(formData.email);
+  const isFormValid =
+    formData.email && formData.password && validateEmail(formData.email);
 
   return (
     <div style={styles.container}>
@@ -165,7 +169,9 @@ const CreateAccountForm = ({ onSubmit }) => {
         <div style={styles.card}>
           <div style={styles.header}>
             <div style={styles.iconWrapper}>
-              <Lock style={{ width: "2rem", height: "2rem", color: "#2563eb" }} />
+              <Lock
+                style={{ width: "2rem", height: "2rem", color: "#2563eb" }}
+              />
             </div>
             <h2 style={styles.title}>Create Account</h2>
             <p style={styles.subtitle}>Sign up with your email and password</p>
@@ -268,12 +274,11 @@ const CreateAccountForm = ({ onSubmit }) => {
             <div style={styles.dividerLine}></div>
           </div>
 
-          {/* OAuth Buttons */}
-          <button style={styles.oauthBtn}>Sign up with Google</button>
-          <button style={{ ...styles.oauthBtn, marginTop: "0.75rem" }}>
-            
-            Sign up with Apple
-          </button>
+          {/* Google Button */}
+          <OAuthButton icon={GoogleIcon} label={"Sign up with google"} />
+
+          {/* Apple Button */}
+          <OAuthButton icon={AppleIcon} label={"Sign up with apple"} />
         </div>
       </div>
     </div>

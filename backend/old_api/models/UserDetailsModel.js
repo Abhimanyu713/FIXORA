@@ -235,19 +235,31 @@ const createUserDetailsService = async (
     RETURNING *;
   `;
 
-  const values = [
+  // const values = [
+  //   user_id,
+  //   first_name.toLowerCase(),
+  //   last_name.toLowerCase(),
+  //   email.toLowerCase(),
+  //   phone_number,
+  //   password, // **Plaintext password (Less Secure)**
+  //   date_of_birth,
+  //   profile_picture_url.toLowerCase(),
+  //   country.toLowerCase(),
+  //   address.toLowerCase(),
+  // ];
+
+    const values = [
     user_id,
-    first_name.toLowerCase(),
-    last_name.toLowerCase(),
-    email.toLowerCase(),
+    first_name,
+    last_name,
+    email,
     phone_number,
     password, // **Plaintext password (Less Secure)**
     date_of_birth,
-    profile_picture_url.toLowerCase(),
-    country.toLowerCase(),
-    address.toLowerCase(),
+    profile_picture_url,
+    country,
+    address,
   ];
-
   try {
     const result = await pool.query(queryText, values);
     return result.rows[0];

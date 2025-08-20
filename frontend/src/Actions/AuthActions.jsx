@@ -6,7 +6,7 @@ import {
   UserLogin,
   UserSignUp,
   UserUpdate,
-} from "../constants/Api_URL";
+} from "../Constants/API_URL";
 
 // login user
 export async function loginUser(credentials) {

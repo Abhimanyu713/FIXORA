@@ -4,7 +4,7 @@ import {
   signupUser,
   createAccountUser,
   updateUser,
-} from "./authAPI";
+} from "../Actions/AuthActions";
 
 // Async Thunks
 // here the url is just the label
