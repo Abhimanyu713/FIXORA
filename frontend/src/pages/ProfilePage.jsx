@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Navbar from "../components/Navbar";
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState({
@@ -115,6 +116,8 @@ const ProfilePage = () => {
   };
 
   return (
+   <>
+   <Navbar/>
     <div style={styles.container}>
       <div style={styles.card}>
         {/* Profile Header */}
@@ -208,6 +211,7 @@ const ProfilePage = () => {
         </div>
       </div>
     </div>
+   </>
   );
 };
 

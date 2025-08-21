@@ -95,18 +95,16 @@ const HomePage = () => {
   return (
     <div style={styles.container}>
       {/* Sidebar Navbar */}
-      <aside style={styles.sidebar}>
+      {/* <aside style={styles.sidebar}>
         <Navbar />
-      </aside>
+      </aside> */}
 
       {/* Main Section */}
       <div style={styles.main}>
         {/* Header */}
-        <header style={styles.header}>
-          <h1 style={styles.logo}>
-            <span style={{ color: "#2563eb" }}>Fixora</span> {/* primary-600 */}
-          </h1>
-        </header>
+        <Navbar />
+
+      
 
         {/* Content */}
         <div style={styles.content}>

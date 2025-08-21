@@ -1,285 +1,369 @@
-import React, { useState } from "react";
-import { Search } from "lucide-react";
-import MentorGrid from "../components/ExplorePage/MentorGrid";
+import React, { useState } from 'react';
+import { Search, Sliders, Star, MapPin, Briefcase, Users, Clock } from 'lucide-react';
+import Navbar from '../components/Navbar';
 
-const mentorsData = [
-  {
-    id: 1,
-    name: "Alice Johnson",
-    tech: "React",
-    rating: 4.9,
-    field: "Web Development",
-    img: "https://i.pravatar.cc/150?img=1",
-  },
-  {
-    id: 2,
-    name: "Raj Mehta",
-    tech: "Flutter",
-    rating: 4.8,
-    field: "Mobile Development",
-    img: "https://i.pravatar.cc/150?img=2",
-  },
-  {
-    id: 3,
-    name: "Sophia Lee",
-    tech: "Machine Learning",
-    rating: 5.0,
-    field: "AI & ML",
-    img: "https://i.pravatar.cc/150?img=3",
-  },
-  {
-    id: 4,
-    name: "Carlos Rivera",
-    tech: "Python",
-    rating: 4.7,
-    field: "Data Science",
-    img: "https://i.pravatar.cc/150?img=4",
-  },
-  {
-    id: 5,
-    name: "Emma Brown",
-    tech: "UI/UX",
-    rating: 4.9,
-    field: "Design",
-    img: "https://i.pravatar.cc/150?img=5",
-  },
-  {
-    id: 6,
-    name: "David Kim",
-    tech: "Angular",
-    rating: 4.6,
-    field: "Web Development",
-    img: "https://i.pravatar.cc/150?img=6",
-  },
-  {
-    id: 7,
-    name: "Fatima Ali",
-    tech: "Django",
-    rating: 4.8,
-    field: "Backend Development",
-    img: "https://i.pravatar.cc/150?img=7",
-  },
-  {
-    id: 8,
-    name: "Liam Martinez",
-    tech: "Node.js",
-    rating: 4.7,
-    field: "Backend Development",
-    img: "https://i.pravatar.cc/150?img=8",
-  },
-  {
-    id: 9,
-    name: "Olivia Chen",
-    tech: "Swift",
-    rating: 4.9,
-    field: "Mobile Development",
-    img: "https://i.pravatar.cc/150?img=9",
-  },
-  {
-    id: 10,
-    name: "Ethan Wright",
-    tech: "Kotlin",
-    rating: 4.6,
-    field: "Mobile Development",
-    img: "https://i.pravatar.cc/150?img=10",
-  },
-  {
-    id: 11,
-    name: "Mia Patel",
-    tech: "TensorFlow",
-    rating: 5.0,
-    field: "AI & ML",
-    img: "https://i.pravatar.cc/150?img=11",
-  },
-  {
-    id: 12,
-    name: "Noah Anderson",
-    tech: "C++",
-    rating: 4.5,
-    field: "Systems Programming",
-    img: "https://i.pravatar.cc/150?img=12",
-  },
-  {
-    id: 13,
-    name: "Ava Gupta",
-    tech: "R",
-    rating: 4.7,
-    field: "Data Science",
-    img: "https://i.pravatar.cc/150?img=13",
-  },
-  {
-    id: 14,
-    name: "James Wilson",
-    tech: "Go",
-    rating: 4.6,
-    field: "Cloud & DevOps",
-    img: "https://i.pravatar.cc/150?img=14",
-  },
-  {
-    id: 15,
-    name: "Zara Hassan",
-    tech: "Figma",
-    rating: 4.8,
-    field: "Design",
-    img: "https://i.pravatar.cc/150?img=15",
-  },
-  {
-    id: 16,
-    name: "Lucas Green",
-    tech: "Rust",
-    rating: 4.7,
-    field: "Systems Programming",
-    img: "https://i.pravatar.cc/150?img=16",
-  },
-  {
-    id: 17,
-    name: "Chloe Scott",
-    tech: "PHP",
-    rating: 4.5,
-    field: "Web Development",
-    img: "https://i.pravatar.cc/150?img=17",
-  },
-  {
-    id: 18,
-    name: "Arjun Nair",
-    tech: "AWS",
-    rating: 4.9,
-    field: "Cloud & DevOps",
-    img: "https://i.pravatar.cc/150?img=18",
-  },
-  {
-    id: 19,
-    name: "Grace Thompson",
-    tech: "Cybersecurity",
-    rating: 4.8,
-    field: "Security",
-    img: "https://i.pravatar.cc/150?img=19",
-  },
-  {
-    id: 20,
-    name: "Hiro Tanaka",
-    tech: "Blockchain",
-    rating: 4.7,
-    field: "Web3 & Blockchain",
-    img: "https://i.pravatar.cc/150?img=20",
-  },
-];
+const MentorExplorePage = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeFilter, setActiveFilter] = useState('All');
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
-export default function ExplorePage() {
-  const [search, setSearch] = useState("");
-  const filteredMentors = mentorsData.filter((mentor) =>
-    mentor.tech.toLowerCase().includes(search.toLowerCase())
-  );
-  const categories = [...new Set(mentorsData.map((m) => m.field))];
+  const filters = [
+    { id: 'All', label: 'All', icon: '👥' },
+    { id: 'New', label: 'New', icon: '🆕' },
+    { id: 'Available ASAP', label: 'Available ASAP', icon: '⚡' },
+    { id: 'Notable', label: 'Notable', icon: '⭐' },
+    { id: 'AI', label: 'AI', icon: '🤖' },
+    { id: 'Soft Skills', label: 'Soft Skills', icon: '📝' },
+    { id: 'Design', label: 'Design', icon: '🎨' },
+    { id: 'Product', label: 'Product', icon: '📦' },
+    { id: 'Engineering', label: 'Engineering', icon: '💻' },
+    { id: 'Marketing', label: 'Marketing', icon: '📊' },
+    { id: 'Data Science', label: 'Data Science', icon: '📈' },
+    { id: 'Content Writing', label: 'Content Writing', icon: '✍️' },
+    { id: 'No/Low Code', label: 'No/Low Code', icon: '👁️' },
+    { id: 'Product Research', label: 'Product Research', icon: '🔍' },
+    { id: 'Sales', label: 'Sales', icon: '💼' }
+  ];
 
-  // ✅ Inline CSS styles
-  const styles = {
-    page: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "flex-start",
-      backgroundColor: "#f9fafb",
-      minHeight: "100vh",
-      width: "100%",
+  const mentors = [
+    {
+      id: 1,
+      name: 'Sunil Subramanian',
+      title: 'LinkedIn Top Voice| Head of Product at Volvo',
+      location: 'SE',
+      image: '/api/placeholder/300/300',
+      sessions: 145,
+      reviews: 34,
+      experience: '16 years',
+      attendance: '94%',
+      isTopRated: true,
+      isAdvanced: true,
+      availableASAP: false
     },
-    container: {
-      width: "100%",
-      maxWidth: "800px",
-      padding: "2rem",
+    {
+      id: 2,
+      name: 'Omar El Nabalawy',
+      title: 'Senior Product Designer at Master Works | Riyadh',
+      location: 'EG',
+      image: '/api/placeholder/300/300',
+      sessions: 65,
+      reviews: 29,
+      experience: '7 years',
+      attendance: '100%',
+      isTopRated: false,
+      isAdvanced: false,
+      availableASAP: false
     },
-    title: {
-      fontSize: "1.875rem",
-      fontWeight: "bold",
-      marginBottom: "1.5rem",
-      color: "#1f2937",
-      textAlign: "center",
+    {
+      id: 3,
+      name: 'Teo Akinola',
+      title: 'Innovation Manager + eSourcing SME at Ericsson',
+      location: 'RO',
+      image: '/api/placeholder/300/300',
+      sessions: 14,
+      reviews: 2,
+      experience: '12 years',
+      attendance: '100%',
+      isTopRated: false,
+      isAdvanced: false,
+      availableASAP: true
     },
-    searchBox: {
-      display: "flex",
-      alignItems: "center",
-      backgroundColor: "white",
-      border: "1px solid #e5e7eb",
-      borderRadius: "0.5rem",
-      boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
-      padding: "0.75rem",
-      marginBottom: "2.5rem",
-      width: "100%",
-      maxWidth: "400px",
-      marginLeft: "auto",
-      marginRight: "auto",
+    {
+      id: 4,
+      name: 'Tasawwer Khurshid',
+      title: 'Principle UX Consultant at Systems Limited',
+      location: 'AE',
+      image: '/api/placeholder/300/300',
+      sessions: 360,
+      reviews: 40,
+      experience: '13 years',
+      attendance: '79%',
+      isTopRated: false,
+      isAdvanced: false,
+      availableASAP: true
     },
-    input: {
-      width: "100%",
-      outline: "none",
-      border: "none",
-      color: "#374151",
-      fontSize: "1rem",
+    {
+      id: 5,
+      name: 'Nihar Malali',
+      title: 'Principal Solutions Architect | Senior Director | Senior...',
+      location: 'US',
+      image: '/api/placeholder/300/300',
+      sessions: 164,
+      reviews: 3,
+      experience: '21 years',
+      attendance: '86%',
+      isTopRated: false,
+      isAdvanced: false,
+      availableASAP: true
     },
-    sectionTitle: {
-      fontSize: "1.25rem",
-      fontWeight: "600",
-      marginBottom: "1rem",
-      color: "#374151",
-      textAlign: "center",
+    {
+      id: 6,
+      name: 'Leyla Aliyeva',
+      title: 'Product implementation specialist at The Central Bank of Azerbaijan',
+      location: 'AZ',
+      image: '/api/placeholder/300/300',
+      sessions: 3,
+      reviews: 1,
+      experience: 'Senior',
+      attendance: '83%',
+      isTopRated: false,
+      isAdvanced: false,
+      availableASAP: false
     },
-    fieldTitle: {
-      fontSize: "1.125rem",
-      fontWeight: "bold",
-      color: "#2563eb",
-      marginBottom: "1rem",
-      textAlign: "center",
+    {
+      id: 7,
+      name: 'Swati Shukla',
+      title: 'Senior Product Manager at Amazon',
+      location: 'US',
+      image: '/api/placeholder/300/300',
+      sessions: 89,
+      reviews: 25,
+      experience: '8 years',
+      attendance: '92%',
+      isTopRated: true,
+      isAdvanced: true,
+      availableASAP: false
     },
-    noResult: {
-      color: "#6b7280",
-      textAlign: "center",
+    {
+      id: 8,
+      name: 'RAJESH KUMAR MALVIYA',
+      title: 'Enterprise Architect at NTT Data',
+      location: 'US',
+      image: '/api/placeholder/300/300',
+      sessions: 115,
+      reviews: 0,
+      experience: '15 years',
+      attendance: '88%',
+      isTopRated: false,
+      isAdvanced: false,
+      availableASAP: true
     },
-  };
+    {
+      id: 9,
+      name: 'Shubham Sharma',
+      title: 'Senior Consultant at Xebia IT Architects',
+      location: 'IN',
+      image: '/api/placeholder/300/300',
+      sessions: 67,
+      reviews: 12,
+      experience: '9 years',
+      attendance: '95%',
+      isTopRated: false,
+      isAdvanced: false,
+      availableASAP: true
+    },
+    {
+      id: 10,
+      name: 'Yeshwanth Vasa',
+      title: 'Software Engineer at Miracles Tek LLC',
+      location: 'US',
+      image: '/api/placeholder/300/300',
+      sessions: 43,
+      reviews: 8,
+      experience: '6 years',
+      attendance: '91%',
+      isTopRated: false,
+      isAdvanced: false,
+      availableASAP: false
+    },
+    {
+      id: 11,
+      name: 'Behrang Fatemi',
+      title: 'Sr PM at SA Health',
+      location: 'AU',
+      image: '/api/placeholder/300/300',
+      sessions: 104,
+      reviews: 18,
+      experience: '12 years',
+      attendance: '87%',
+      isTopRated: false,
+      isAdvanced: true,
+      availableASAP: false
+    },
+    {
+      id: 12,
+      name: 'Mehmet Ergene',
+      title: 'Associate Experience Director at MRM GmbH',
+      location: 'DE',
+      image: '/api/placeholder/300/300',
+      sessions: 78,
+      reviews: 14,
+      experience: '10 years',
+      attendance: '94%',
+      isTopRated: false,
+      isAdvanced: true,
+      availableASAP: false
+    }
+  ];
+
+  const filteredMentors = mentors.filter(mentor => {
+    const matchesSearch = mentor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         mentor.title.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    if (activeFilter === 'All') return matchesSearch;
+    if (activeFilter === 'Available ASAP') return matchesSearch && mentor.availableASAP;
+    if (activeFilter === 'New') return matchesSearch && mentor.sessions < 20;
+    
+    return matchesSearch;
+  });
 
   return (
-    <div style={styles.page}>
-      <div style={styles.container}>
-        <h1 style={styles.title}>Explore Mentors</h1>
+    <>
+    <Navbar/>
 
-        {/* Search Bar */}
-        <div style={styles.searchBox}>
-          <Search color="#6b7280" size={20} style={{ marginRight: "0.5rem" }} />
-          <input
-            type="text"
-            placeholder="Search mentors by technology..."
-            style={styles.input}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+       <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center gap-8 mb-6">
+            <h1 className="text-2xl font-semibold text-gray-900 border-b-2 border-blue-600 pb-2">
+              Mentors
+            </h1>
+            <h2 className="text-2xl font-medium text-gray-400">Group Sessions</h2>
+          </div>
+          
+          {/* Search and Controls */}
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-4 flex-1">
+              <div className="relative flex-1 max-w-md">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search by name, company, role"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              
+              <button className="flex items-center gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors">
+                <span className="text-sm">✨</span>
+                <span>Try AI Search</span>
+              </button>
+            </div>
+            
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">New</span>
+                <label className="flex items-center gap-2 text-sm">
+                  <span>Display advanced sessions</span>
+                  <span className="text-gray-400">| Commit to long term</span>
+                  <input
+                    type="checkbox"
+                    checked={showAdvanced}
+                    onChange={(e) => setShowAdvanced(e.target.checked)}
+                    className="w-4 h-4 text-blue-600 rounded"
+                  />
+                </label>
+              </div>
+              
+              <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                <Sliders className="w-4 h-4" />
+                <span>Filters</span>
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Search Results */}
-        {search && (
-          <div style={{ marginBottom: "3rem" }}>
-            <h2 style={styles.sectionTitle}>Results</h2>
-            {filteredMentors.length > 0 ? (
-              <MentorGrid mentors={filteredMentors} small />
-            ) : (
-              <p style={styles.noResult}>No mentors found for "{search}"</p>
-            )}
-          </div>
-        )}
+        {/* Filter Tags */}
+        <div className="flex items-center gap-4 mb-8 overflow-x-auto pb-2">
+          {filters.map((filter) => (
+            <button
+              key={filter.id}
+              onClick={() => setActiveFilter(filter.id)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm whitespace-nowrap transition-colors ${
+                activeFilter === filter.id
+                  ? 'bg-gray-900 text-white'
+                  : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+              }`}
+            >
+              <span className="text-base">{filter.icon}</span>
+              <span>{filter.label}</span>
+            </button>
+          ))}
+        </div>
 
-        {/* Top Mentors by Field */}
-        <div>
-          <h2 style={styles.sectionTitle}>Top Mentors by Field</h2>
-          {categories.map((field, idx) => {
-            const topMentors = mentorsData
-              .filter((m) => m.field === field)
-              .slice(0, 2);
-            return (
-              <div key={idx} style={{ marginBottom: "2.5rem" }}>
-                <h3 style={styles.fieldTitle}>{field}</h3>
-                <MentorGrid mentors={topMentors} small />
+        {/* Mentor Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+          {filteredMentors.map((mentor) => (
+            <div key={mentor.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
+              {/* Image and Badges */}
+              <div className="relative h-48 bg-gray-100">
+                <img
+                  src={mentor.image}
+                  alt={mentor.name}
+                  className="w-full h-full object-cover"
+                />
+                
+                {/* Badges */}
+                <div className="absolute top-3 left-3 flex flex-col gap-1">
+                  {mentor.isTopRated && (
+                    <span className="px-2 py-1 bg-black text-white text-xs rounded">
+                      Top rated
+                    </span>
+                  )}
+                </div>
+                
+                <div className="absolute bottom-3 left-3 flex flex-col gap-1">
+                  {mentor.availableASAP && (
+                    <span className="flex items-center gap-1 px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
+                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                      Available ASAP
+                    </span>
+                  )}
+                  {mentor.isAdvanced && (
+                    <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">
+                      ⚡ Advanced
+                    </span>
+                  )}
+                </div>
               </div>
-            );
-          })}
+              
+              {/* Content */}
+              <div className="p-4">
+                <div className="flex items-start justify-between mb-2">
+                  <h3 className="font-semibold text-gray-900 text-sm leading-tight">
+                    {mentor.name}
+                  </h3>
+                  <span className="text-xs text-gray-500 bg-gray-100 px-1 py-0.5 rounded">
+                    {mentor.location}
+                  </span>
+                </div>
+                
+                <div className="flex items-center gap-1 mb-3">
+                  <Briefcase className="w-3 h-3 text-gray-400" />
+                  <p className="text-xs text-gray-600 line-clamp-2">
+                    {mentor.title}
+                  </p>
+                </div>
+                
+                <div className="flex items-center gap-1 mb-4">
+                  <Users className="w-3 h-3 text-gray-400" />
+                  <span className="text-xs text-gray-600">
+                    {mentor.sessions} sessions ({mentor.reviews} reviews)
+                  </span>
+                </div>
+                
+                {/* Stats */}
+                <div className="grid grid-cols-2 gap-3 text-xs">
+                  <div>
+                    <div className="text-gray-500">Experience</div>
+                    <div className="font-medium text-gray-900">{mentor.experience}</div>
+                  </div>
+                  <div>
+                    <div className="text-gray-500">Avg. Attendance</div>
+                    <div className="font-medium text-gray-900">{mentor.attendance}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
-  );
-}
+
+    </>  );
+ 
+};
+
+export default MentorExplorePage;
