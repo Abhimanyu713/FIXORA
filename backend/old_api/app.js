@@ -2,11 +2,10 @@ const PORT = process.env.PORT || 9000; // Set server port
 
 const http = require("http");
 const express = require("express");
-const cors = require("cors");   // ✅ Import cors
+const cors = require("cors");   
 
 const app = express();
 
-// ✅ Apply CORS middleware
 app.use(cors({
   origin: "*",   // Allow all origins (for development). Replace with specific domain in production
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
@@ -24,9 +23,9 @@ const userLanguagesRecord = require("./routes/userLanguageRecord");
 const userDeatils = require("./routes/userDeatils.js");
 const list = require("./routes/lists");
 const feedback = require("./routes/userFeedback.js");
+const post = require("./routes/POst")
 const mentor = require("./routes/Mentor");
 const mentee = require("./routes/Mentee");
-const post = require("./routes/POst")
 // connectionDb("mongodb+srv://yamah85959:stJgSTKiXw1G6W75@cluster0.aozcb23.mongodb.net/testDB?retryWrites=true&w=majority&appName=Cluster0"); 
  connectionDb("mongodb://127.0.0.1:27017/new_database")
 // createAllTable(); // created all the tables
@@ -44,6 +43,7 @@ app.use("/list", list);
 app.use("/feedback", feedback);
 app.use("/mentor", mentor);
 app.use("/mentee", mentee);
+app.use("/post",post)
 
 
 app.listen(PORT, "0.0.0.0", () => {  

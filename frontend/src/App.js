@@ -12,6 +12,9 @@ import CreateAccountPage from "./pages/CreateAccountPage";
 import ExplorePage from "./pages/ExplorePage";
 import CallingPage from "./pages/CallingPage";
 import InboxPage from "./pages/InboxPage";
+import SettingsPage from "./pages/Settings.Page";
+import MentorDetailPage from "./pages/MentorDetailsPage";
+import WebRTC from "./config/WebRTC/signallingServer";
 
 function App() {
   return (
@@ -24,7 +27,10 @@ function App() {
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/create_account" element={<CreateAccountPage />} />
           <Route path="/calling" element={<CallingPage />} />
+           <Route path="/mentorDetails" element={<MentorDetailPage />} />
           <Route path="/inbox" element={<InboxPage />} />
+            <Route path="/webrtc" element={<WebRTC />} />
+             <Route path="/setting" element={<SettingsPage />} />
           <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>
       </div>

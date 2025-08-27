@@ -334,7 +334,7 @@ const MentorExplorePage = () => {
                   <Briefcase className="w-3 h-3 text-gray-400" />
                   <p className="text-xs text-gray-600 line-clamp-2">
                     {mentor.title}
-                  </p>
+                  </p> 
                 </div>
                 
                 <div className="flex items-center gap-1 mb-4">

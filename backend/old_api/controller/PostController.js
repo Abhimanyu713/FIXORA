@@ -1,21 +1,58 @@
 const Post = require("../models/PostModal");
 
-// ✅ Utility response function
+
 const sendResponse = (res, statusCode, success, message, data = null) => {
   return res.status(statusCode).json({ success, message, data });
 };
 
-// ✅ Get all posts
+
 const handleGetAllPost = async (req, res) => {
-  try {
-    const posts = await Post.find();
-    return sendResponse(res, 200, true, "Posts fetched successfully", posts);
-  } catch (error) {
-    return sendResponse(res, 500, false, "Failed to fetch posts", error);
-  }
+  // try {
+
+    
+  //   const posts = await Post.find();
+  //   return sendResponse(res, 200, true, "Posts fetched successfully", posts);
+  // } catch (error) {
+  //   return sendResponse(res, 500, false, "Failed to fetch posts", error);
+  // }
+
+   try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+
+        const startIndex = (page - 1) * limit;
+        const total = await Post.countDocuments();
+
+        const posts = await Post.find()
+            .skip(startIndex)
+            .limit(limit);
+
+        const pagination = {};
+        if (startIndex + limit < total) {
+            pagination.next = {
+                page: page + 1,
+                limit
+            };
+        }
+        if (startIndex > 0) {
+            pagination.prev = {
+                page: page - 1,
+                limit
+            };
+        }
+
+        res.status(200).json({
+            total,
+            page,
+            limit,
+            pagination,
+            data: posts
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error', error });
+    }
 };
 
-// ✅ Get post by ID
 const handleGetPostById = async (req, res) => {
   try {
     const { id } = req.query;
@@ -32,7 +69,6 @@ const handleGetPostById = async (req, res) => {
   }
 };
 
-// ✅ Create new post
 const handleRegisterPost = async (req, res) => {
   try {
     const {
@@ -75,7 +111,6 @@ const handleRegisterPost = async (req, res) => {
   }
 };
 
-// ✅ Update post
 const handleUpdatePost = async (req, res) => {
   try {
     const { id } = req.query;
@@ -95,7 +130,6 @@ const handleUpdatePost = async (req, res) => {
   }
 };
 
-// ✅ Delete post
 const handleDeletePost = async (req, res) => {
   try {
     const { id } = req.query;
@@ -114,7 +148,6 @@ const handleDeletePost = async (req, res) => {
   }
 };
 
-// ✅ Export all handlers (CommonJS)
 module.exports = {
   handleGetAllPost,
   handleGetPostById,
