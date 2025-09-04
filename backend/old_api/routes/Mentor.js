@@ -9,6 +9,7 @@ handleRegisterMentor,
 handleLoginMentor,
 handleDeleteMentor,
 handleUpdateMentor,
+handleGetUserBySkill
 } = require("../controller/MentorController");
 
 const router = express.Router();
@@ -26,6 +27,9 @@ router.delete("/delete", handleDeleteMentor);
 
 // Route to update a mentor
 router.patch("/update", handleUpdateMentor);
+
+// Route to get the mentor by skill 
+router.get("/mentors",handleGetUserBySkill)
 
 // Export the router
 module.exports = router;

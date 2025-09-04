@@ -2,30 +2,55 @@ const mongoose = require("mongoose");
 const { createTokenForUser } = require("../services/authentication");
 const { randomBytes, createHmac } = require("crypto");
 
+const timeSlotSchema = new mongoose.Schema({
+    start: {
+      type: String,
+      required: true,
+      match: /^([01]\d|2[0-3]):([0-5]\d)$/ // Validates 24-hour HH:mm format
+    },
+    end: {
+      type: String,
+      required: true,
+      match: /^([01]\d|2[0-3]):([0-5]\d)$/
+    }
+  });
+  
+
 const mentorSchema = new mongoose.Schema({
-    name: { type: String, required: false },
-    age: Number,
     email: { type: String, required: true, unique: true },
     password: {
         type: String,
         required: true,
     },
-    salt: {
-        type: String,
-    },
+    name: String,
+    age: Number,
+    dob:Date,
+    gender:String,
+    salt:  String,
     phone: String,
+    country:{type:String},
+    address:String,
     education: String,
     college: String,
     stream: String,
     yearsOfExperience: Number,
     areasOfProficiency: [String],
+    certification:[String],
     bio: String,
     profilePhoto: { type: String, default: "../default.png" },
     availability: { type: Boolean, default: true },
+    available_days: {
+        type: [String],
+        enum: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'],
+        required: true
+      },
     languages: [String],
     rating: { type: Number, default: 0 },
     coins: { type: Number, default: 0 },
     role: { type: String, default: "mentor" },
+    timeslots: {
+        type: [timeSlotSchema]
+      } 
 }, { timestamps: true });
 
 // Hash password and ensure lowercase email before saving

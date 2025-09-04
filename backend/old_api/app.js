@@ -17,10 +17,6 @@ app.use(express.json()); // Middleware to parse JSON
 const { connectionDb } = require("./config/mongodb.js");
 const createAllTable = require("./controller/tableController.js");
 
-const userRouter = require("./routes/user.js");
-const userExperience = require("./routes/userExperience.js");
-const userLanguagesRecord = require("./routes/userLanguageRecord");
-const userDeatils = require("./routes/userDeatils.js");
 const list = require("./routes/lists");
 const feedback = require("./routes/userFeedback.js");
 const post = require("./routes/POst")
@@ -35,15 +31,11 @@ app.get("/", (req, res) => {
 });
 
 app.use("/uploads", express.static("uploads"));
-app.use("/user", userRouter);
-app.use("/userExperience", userExperience);
-app.use("/userLanguage", userLanguagesRecord);
-app.use("/userDetails", userDeatils);
 app.use("/list", list);
 app.use("/feedback", feedback);
 app.use("/mentor", mentor);
 app.use("/mentee", mentee);
-app.use("/post",post)
+// app.use("/post",post)
 
 
 app.listen(PORT, "0.0.0.0", () => {  
